@@ -1,7 +1,6 @@
 package examples.search;
 
 import examples.model.TwelveBits;
-import examples.search.CarbonDioxideScrubberCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,5 @@
 package examples.model;
 
-import examples.model.Submarine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SubmarineTest {
 
@@ -22,22 +20,26 @@ class SubmarineTest {
 
     @Test
     void countTimeOfDepthIncreases_whenUsingNullForArgument_thenReturnsZero() {
-        assertEquals(0, submarine.countTimeOfDepthIncreases(null));
+        assertThat(submarine.countTimeOfDepthIncreases(null))
+                .isEqualTo(0);
     }
 
     @Test
     void countTimeOfDepthIncreases_whenArgumentListIsEmpty_thenReturnsZero() {
-        assertEquals(0, submarine.countTimeOfDepthIncreases(new ArrayList<>()));
+        assertThat(submarine.countTimeOfDepthIncreases(new ArrayList<>()))
+                .isEqualTo(0);
     }
 
     @Test
     void countTimeOfDepthIncreases_whenArgumentListShouldReturnTwo_thenReturnsTwo() {
-        assertEquals(2, submarine.countTimeOfDepthIncreases(returnTestInputListWithTwoRisingNumbers()));
+        assertThat(submarine.countTimeOfDepthIncreases(returnTestInputListWithTwoRisingNumbers()))
+                .isEqualTo(2);
     }
 
     @Test
     void countTimeOfDepthIncreases_whenArgumentListContainsNoRisingNumbers_thenReturnsZero() {
-        assertEquals(0, submarine.countTimeOfDepthIncreases(returnTestInputListWithoutRisingNumbers()));
+        assertThat(submarine.countTimeOfDepthIncreases(returnTestInputListWithoutRisingNumbers()))
+                .isEqualTo(0);
     }
 
     private List<String> returnTestInputListWithTwoRisingNumbers() {
