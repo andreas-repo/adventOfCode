@@ -4,6 +4,7 @@ public class BingoNumber {
 
     private Integer number;
     private Integer placeOnBoard;
+    private boolean isMarked = false;
 
     public BingoNumber() {}
     public BingoNumber(Integer number, Integer placeOnBoard) {
@@ -27,11 +28,20 @@ public class BingoNumber {
         this.placeOnBoard = placeOnBoard;
     }
 
+    public boolean isMarked() {
+        return isMarked;
+    }
+
+    public void setMarked(boolean marked) {
+        isMarked = marked;
+    }
+
     @Override
     public String toString() {
         return "BingoNumber{" +
                 "number=" + number +
                 ", placeOnBoard=" + placeOnBoard +
+                ", isMarked=" + isMarked +
                 '}';
     }
 }

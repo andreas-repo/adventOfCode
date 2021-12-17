@@ -29,10 +29,47 @@ public class BingoBoard {
         board.forEach(bingoNumber -> {
             if (bingoNumber.getNumber() == number) {
                 containsNumber.set(true);
+                bingoNumber.setMarked(true);
             }
         });
 
         return containsNumber.get();
+    }
+
+    public boolean hasBoardWon() {
+        if (board.get(0).isMarked() && board.get(1).isMarked() && board.get(2).isMarked() && board.get(3).isMarked() && board.get(4).isMarked()) {
+            return true;
+        }
+        if (board.get(5).isMarked() && board.get(6).isMarked() && board.get(7).isMarked() && board.get(8).isMarked() && board.get(9).isMarked()) {
+            return true;
+        }
+        if (board.get(10).isMarked() && board.get(11).isMarked() && board.get(12).isMarked() && board.get(13).isMarked() && board.get(14).isMarked()) {
+            return true;
+        }
+        if (board.get(15).isMarked() && board.get(16).isMarked() && board.get(17).isMarked() && board.get(18).isMarked() && board.get(19).isMarked()) {
+            return true;
+        }
+        if (board.get(20).isMarked() && board.get(21).isMarked() && board.get(22).isMarked() && board.get(23).isMarked() && board.get(24).isMarked()) {
+            return true;
+        }
+
+        if (board.get(0).isMarked() && board.get(5).isMarked() && board.get(10).isMarked() && board.get(15).isMarked() && board.get(20).isMarked()) {
+            return true;
+        }
+        if (board.get(1).isMarked() && board.get(6).isMarked() && board.get(11).isMarked() && board.get(16).isMarked() && board.get(21).isMarked()) {
+            return true;
+        }
+        if (board.get(2).isMarked() && board.get(7).isMarked() && board.get(12).isMarked() && board.get(17).isMarked() && board.get(22).isMarked()) {
+            return true;
+        }
+        if (board.get(3).isMarked() && board.get(8).isMarked() && board.get(13).isMarked() && board.get(18).isMarked() && board.get(23).isMarked()) {
+            return true;
+        }
+        if (board.get(4).isMarked() && board.get(9).isMarked() && board.get(14).isMarked() && board.get(19).isMarked() && board.get(24).isMarked()) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

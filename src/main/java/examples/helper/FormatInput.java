@@ -55,7 +55,7 @@ public class FormatInput {
         return bingoBoardList;
     }
 
-    public static List<Integer> toBingoInputList(List<String> inputList) {
+    public static List<Integer> toBingoBoardList(List<String> inputList) {
         List<Integer> inputBingoNumbers = new ArrayList<>();
         inputList.forEach(inputLine -> {
             List<String> tempStringList =  Arrays.asList(inputLine.split(","));
