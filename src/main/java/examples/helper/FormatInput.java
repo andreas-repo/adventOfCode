@@ -1,22 +1,24 @@
 package examples.helper;
 
 import examples.model.BingoBoard;
+import examples.model.BingoNumber;
 import examples.model.Command;
 import examples.model.TwelveBits;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FormatInput {
     //TODO
-    public static List<BingoBoard> toBingoBoard(List<String> inputList) {
-        List<BingoBoard> bingoBoardList = new ArrayList<>();
+    public static List<List<Integer>> getAllBoardsWithNumbers(List<String> inputList) {
+        List<List<Integer>> bingoBoardList = new ArrayList<>();
         List<Integer> tempBingoNumbers = new ArrayList<>();
 
         inputList.forEach(line -> {
             if(line.equals("")) {
-                bingoBoardList.add(new BingoBoard(tempBingoNumbers));
+                bingoBoardList.add(tempBingoNumbers);
                 tempBingoNumbers.clear();
             } else {
                 List<String> tempStringList =  Arrays.asList(line.split(" "));
@@ -28,6 +30,26 @@ public class FormatInput {
                 });
                 tempBingoNumbers.addAll(tempIntegerList);
             }
+        });
+
+        return bingoBoardList;
+    }
+
+    public static List<BingoBoard> getAllPlacesOnBoard(List<List<Integer>> boardList) {
+        List<BingoBoard> bingoBoardList = new ArrayList<>();
+
+
+        boardList.forEach(board -> {
+            BingoBoard bingoBoard = new BingoBoard();
+            List<BingoNumber> tempBingoNumbers = new ArrayList<>();
+            for (int i = 0; i < board.size(); i++) {
+                BingoNumber bingoNumber = new BingoNumber();
+                bingoNumber.setNumber(boardList.get(0).get(i));
+                bingoNumber.setPlaceOnBoard(i);
+                tempBingoNumbers.add(bingoNumber);
+            }
+            bingoBoard.setBoard(tempBingoNumbers);
+            bingoBoardList.add(bingoBoard);
         });
 
         return bingoBoardList;

@@ -1,26 +1,38 @@
 package examples.model;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BingoBoard {
 
-    List<Integer> board;
+    List<BingoNumber> board;
 
     public BingoBoard() {}
-    public BingoBoard(List<Integer> board) {
+    public BingoBoard(List<BingoNumber> board) {
         this.board = board;
     }
 
-    public List<Integer> getBoard() {
+    public List<BingoNumber> getBoard() {
         return board;
     }
 
-    public void setBoard(List<Integer> board) {
+    public void setBoard(List<BingoNumber> board) {
         this.board = board;
     }
 
+    public void addBingoNumberToBoard(BingoNumber bingoNumber) {
+        this.board.add(bingoNumber);
+    }
+
     public boolean containsNumber(int number) {
-         return this.board.contains(number);
+        AtomicBoolean containsNumber = new AtomicBoolean(false);
+        board.forEach(bingoNumber -> {
+            if (bingoNumber.getNumber() == number) {
+                containsNumber.set(true);
+            }
+        });
+
+        return containsNumber.get();
     }
 
     @Override

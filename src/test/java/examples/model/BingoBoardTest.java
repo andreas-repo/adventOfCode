@@ -79,10 +79,12 @@ class BingoBoardTest {
     }
 
     private void fillTestBingoBoard() {
-        List<Integer> testData = new ArrayList<>();
+        List<BingoNumber> testBingoNumbers = new ArrayList<>();
+
         for(int i = 1; i <= 25; i++) {
-            testData.add(i);
+            BingoNumber bingoNumber = new BingoNumber(i, i);
+            testBingoNumbers.add(bingoNumber);
         }
-        this.bingoBoard.setBoard(testData);
+        this.bingoBoard.setBoard(testBingoNumbers);
     }
 }

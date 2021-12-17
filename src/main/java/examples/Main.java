@@ -40,8 +40,11 @@ public class Main {
 
         readFile.setFilePath("C:\\Users\\andre\\Development\\Projekte\\adventOfCode\\bingoBoards.txt");
         List<String> inputStringBingoBoards = readFile.readInputText();
-        List<BingoBoard> inputBingoBoards = FormatInput.toBingoBoard(inputStringBingoBoards);
+        List<List<Integer>> inputBingoBoards = FormatInput.getAllBoardsWithNumbers(inputStringBingoBoards);
+        List<BingoBoard> inputBingo = FormatInput.getAllPlacesOnBoard(inputBingoBoards);
         System.out.println(inputBingoBoards);
         System.out.println(inputBingoBoards.size());
+        System.out.println(inputBingo);
+        System.out.println(inputBingo.size());
     }
 }
