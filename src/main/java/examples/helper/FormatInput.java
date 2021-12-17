@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FormatInput {
 
-    public static List<List<Integer>> getAllBoardsWithNumbers(List<String> inputList) {
+    private static List<List<Integer>> getAllBoardNumbers(List<String> inputList) {
         List<List<Integer>> bingoBoardList = new ArrayList<>();
         List<Integer> tempBingoNumbers = new ArrayList<>();
 
@@ -34,7 +34,8 @@ public class FormatInput {
         return bingoBoardList;
     }
 
-    public static List<BingoBoard> getAllPlacesOnBoard(List<List<Integer>> boardList) {
+    public static List<BingoBoard> getAllPlacesOnBoard(List<String> inputList) {
+        List<List<Integer>> boardList = getAllBoardNumbers(inputList);
         List<BingoBoard> bingoBoardList = new ArrayList<>();
 
 
