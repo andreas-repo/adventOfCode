@@ -8,10 +8,9 @@ import examples.model.TwelveBits;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class FormatInput {
-    //TODO
+
     public static List<List<Integer>> getAllBoardsWithNumbers(List<String> inputList) {
         List<List<Integer>> bingoBoardList = new ArrayList<>();
         List<Integer> tempBingoNumbers = new ArrayList<>();
