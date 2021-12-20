@@ -174,6 +174,85 @@ class BingoBoardTest {
                 .isTrue();
     }
 
+    @Test
+    @DisplayName("Tests if a number isn't marked if the board has already won")
+    void containsNumber_whenBoardHasAlreadyWon_thenNumberIsntMarked() {
+        this.fillTestBingoBoard();
+        List<Integer> drawnNumbers = getMarkedFiftiethVerticalLine();
+        drawnNumbers.forEach(this.bingoBoard::containsNumber);
+
+        assertThat(this.bingoBoard.hasBoardWon())
+                .isTrue();
+
+        this.bingoBoard.containsNumber(5);
+        assertThat(this.bingoBoard.getBoard().get(4).isMarked())
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("Tests if a number is marked if the board hasn't won")
+    void containsNumber_whenBoardHasNotWon_thenMarksNumber() {
+        this.fillTestBingoBoard();
+        List<Integer> drawnNumbers = getBoardWhichIsntWon();
+        drawnNumbers.forEach(this.bingoBoard::containsNumber);
+
+        assertThat(this.bingoBoard.hasBoardWon())
+                .isFalse();
+        assertThat(this.bingoBoard.getAmountOfMarkedNumbers())
+                .isEqualTo(5);
+        assertThat(this.bingoBoard.getBoard().get(7).isMarked())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("Tests if the correct amount of marked numbers is returned")
+    void getAmountOfMarkedNumbers_whenMethodIsCalled_returnsCorrectAmountOfMarkedNumbersOnTheBoard() {
+        this.fillTestBingoBoard();
+        List<Integer> drawnNumbers = getMarkedFiftiethVerticalLine();
+        drawnNumbers.forEach(this.bingoBoard::containsNumber);
+
+        assertThat(this.bingoBoard.hasBoardWon())
+                .isTrue();
+        assertThat(this.bingoBoard.getAmountOfMarkedNumbers())
+                .isEqualTo(5);
+    }
+
+    @Test
+    void compare_whenContentIsTheSame_thenReturnsTrue() {
+        BingoBoard testBoardOne = getFilledTestBoard();
+        BingoBoard testBoardTwo = getFilledTestBoard();
+
+        assertThat(testBoardOne.compare(testBoardTwo))
+                .isTrue();
+    }
+
+    @Test
+    void compare_whenContentsDiffer_thenReturnsFalse() {
+        BingoBoard testBoardOne = getFilledTestBoard();
+        BingoBoard testBoardTwo = getFilledTestBoard();
+        testBoardTwo.getBoard().get(0).setNumber(99);
+
+        assertThat(testBoardOne.compare(testBoardTwo))
+                .isFalse();
+    }
+
+    @Test
+    void getSumOfAllUnmarkedNumbers_whenBoardWon_thenReturnsCorrectValue() {
+        this.fillTestBingoBoard();
+        List<Integer> drawnNumbers = new ArrayList<>(getMarkedFirstLine());
+        drawnNumbers.add(17);
+        drawnNumbers.add(3);
+        drawnNumbers.add(25);drawnNumbers.add(1);
+        drawnNumbers.forEach(this.bingoBoard::containsNumber);
+
+        assertThat(this.bingoBoard.hasBoardWon())
+                .isTrue();
+        assertThat(this.bingoBoard.getAmountOfMarkedNumbers())
+                .isEqualTo(5);
+        assertThat(this.bingoBoard.getLastMarkedNumber())
+                .isEqualTo(5);
+    }
+
     static Stream<Integer> falseValueSource() {
         return Stream.of(FALSE_VALUES);
     }
@@ -186,6 +265,20 @@ class BingoBoardTest {
             testBingoNumbers.add(bingoNumber);
         }
         this.bingoBoard.setBoard(testBingoNumbers);
+    }
+
+    private BingoBoard getFilledTestBoard() {
+        List<BingoNumber> testBingoNumbers = new ArrayList<>();
+
+        for(int i = 1; i <= 25; i++) {
+            BingoNumber bingoNumber = new BingoNumber(i, i);
+            testBingoNumbers.add(bingoNumber);
+        }
+
+        BingoBoard board = new BingoBoard();
+        board.setBoard(testBingoNumbers);
+
+        return board;
     }
 
     private List<Integer> getMarkedFirstLine() {
@@ -272,6 +365,15 @@ class BingoBoardTest {
     private List<Integer> getMarkedFiftiethVerticalLine() {
         Integer number1 = 4;
         Integer number2 = 9;
+        Integer number3 = 14;
+        Integer number4 = 19;
+        Integer number5 = 24;
+        return List.of(number1, number2, number3, number4, number5);
+    }
+
+    private List<Integer> getBoardWhichIsntWon() {
+        Integer number1 = 4;
+        Integer number2 = 8;
         Integer number3 = 14;
         Integer number4 = 19;
         Integer number5 = 24;

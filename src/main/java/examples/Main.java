@@ -36,7 +36,7 @@ public class Main {
 
         readFile.setFilePath("C:\\Users\\andre\\Development\\Projekte\\adventOfCode\\bingoNumbers.txt");
         List<String> inputStringBingoNumbers = readFile.readInputText();
-        List<Integer> inputBingoNumbers = FormatInput.toBingoBoardList(inputStringBingoNumbers);
+        List<Integer> inputBingoNumbers = FormatInput.toDrawnNumbersList(inputStringBingoNumbers);
         System.out.println(inputBingoNumbers);
 
         readFile.setFilePath("C:\\Users\\andre\\Development\\Projekte\\adventOfCode\\bingoBoards.txt");
@@ -61,6 +61,11 @@ public class Main {
         BingoGame bingoGame = new BingoGame();
         System.out.println(bingoGame.playBingo(firstBoard, firstNumbersList));
         System.out.println(firstBoard);
-
+        System.out.println("--------------------------------------------------------");
+        BingoBoard winningBoard = bingoGame.findFirstWinningBoard(inputBingo, inputBingoNumbers);
+        System.out.println(winningBoard);
+        System.out.println(winningBoard.getSumOfAllUnmarkedNumbers());
+        System.out.println(winningBoard.getAmountOfMarkedNumbers());
+        System.out.println(winningBoard.getLastMarkedNumber());
     }
 }

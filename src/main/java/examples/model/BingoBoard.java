@@ -1,11 +1,15 @@
 package examples.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BingoBoard {
 
-    List<BingoNumber> board;
+    private List<BingoNumber> board;
+    private int lastMarkedNumber;
+
 
     public BingoBoard() {}
     public BingoBoard(List<BingoNumber> board) {
@@ -28,8 +32,11 @@ public class BingoBoard {
         AtomicBoolean containsNumber = new AtomicBoolean(false);
         board.forEach(bingoNumber -> {
             if (bingoNumber.getNumber() == number) {
-                containsNumber.set(true);
-                bingoNumber.setMarked(true);
+                if (!this.hasBoardWon()) {
+                    containsNumber.set(true);
+                    bingoNumber.setMarked(true);
+                    lastMarkedNumber = number;
+                }
             }
         });
 
@@ -72,10 +79,61 @@ public class BingoBoard {
         return false;
     }
 
+    public int getAmountOfMarkedNumbers() {
+        AtomicInteger amount = new AtomicInteger();
+
+        this.board.forEach(number -> {
+            if (number.isMarked()) {
+                amount.getAndIncrement();
+            }
+        });
+
+        return amount.get();
+    }
+
+    public int getSumOfAllUnmarkedNumbers() {
+        AtomicInteger amount = new AtomicInteger();
+        this.board.forEach(number -> {
+            if(!number.isMarked()) {
+                amount.set(amount.get() + number.getNumber());
+            }
+        });
+
+        return amount.get();
+    }
+
+    public int getLastMarkedNumber() {
+        return lastMarkedNumber;
+    }
+
+    public void setLastMarkedNumber(int lastMarkedNumber) {
+        this.lastMarkedNumber = lastMarkedNumber;
+    }
+
+    public boolean compare(Object o) {
+        if (o == null) return false;
+        BingoBoard that = (BingoBoard) o;
+        return this.lastMarkedNumber == that.lastMarkedNumber && this.board.toString().equals(that.board.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BingoBoard that = (BingoBoard) o;
+        return lastMarkedNumber == that.lastMarkedNumber && Objects.equals(board, that.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, lastMarkedNumber);
+    }
+
     @Override
     public String toString() {
         return "BingoBoard{" +
                 "board=" + board +
+                ", lastMarkedNumber=" + lastMarkedNumber +
                 '}';
     }
 }

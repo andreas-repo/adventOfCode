@@ -1,38 +1,35 @@
 package examples.model;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BingoGame {
-    private List<Integer> drawedNumbers;
-    private List<BingoBoard> bingoBoardList;
-    private BingoBoard winningBoard;
 
-    public boolean playBingo(BingoBoard bingoBoard, List<Integer> drawedNumbers) {
-        drawedNumbers.forEach(bingoBoard::containsNumber);
-        return bingoBoard.hasBoardWon();
-    }
+    public BingoBoard findFirstWinningBoard(List<BingoBoard> bingoBoards, List<Integer> drawnNumbers) {
+        BingoBoard winningBoard = new BingoBoard();
+        AtomicBoolean hasWon = new AtomicBoolean(false);
 
-    public List<Integer> getDrawedNumbers() {
-        return drawedNumbers;
-    }
+        for (int number : drawnNumbers) {
+            bingoBoards.forEach(board -> {
+                board.containsNumber(number);
+                if(board.hasBoardWon()) {
+                    hasWon.set(true);
+                }
+            });
 
-    public void setDrawedNumbers(List<Integer> drawedNumbers) {
-        this.drawedNumbers = drawedNumbers;
-    }
+            for (BingoBoard board : bingoBoards) {
+                if (board.hasBoardWon()) {
+                    winningBoard = board;
+                    break;
+                }
+            }
+        }
 
-    public List<BingoBoard> getBingoBoardList() {
-        return bingoBoardList;
-    }
-
-    public void setBingoBoardList(List<BingoBoard> bingoBoardList) {
-        this.bingoBoardList = bingoBoardList;
-    }
-
-    public BingoBoard getWinningBoard() {
         return winningBoard;
     }
 
-    public void setWinningBoard(BingoBoard winningBoard) {
-        this.winningBoard = winningBoard;
+    public boolean playBingo(BingoBoard bingoBoard, List<Integer> drawnNumbers) {
+        drawnNumbers.forEach(bingoBoard::containsNumber);
+        return bingoBoard.hasBoardWon();
     }
 }
